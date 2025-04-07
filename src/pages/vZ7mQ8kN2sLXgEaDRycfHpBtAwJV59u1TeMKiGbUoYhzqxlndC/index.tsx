@@ -1,4 +1,8 @@
-import React from "react";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { GetMeal, GetMealRefProps } from "@/components/GetMeal";
+import AppContext from "@/context/appContext";
+import React, { useContext, useRef } from "react";
+import styles from "./index.module.scss";
 
 type Props = { isLogin: boolean };
 
@@ -6,30 +10,57 @@ const MEALS_DATA = [
   {
     id: 1,
     name: "Ăn trưa ngày 18/4/2025",
-    time: "11h30 - 13h15 Ngày 18/4/2025",
+    time: "11h30 - 13h15",
     location: "Nhà hàng khách sạn Nam Cường",
   },
   {
     id: 2,
     name: "Tiệc chào mừng tối 18/4/2025",
-    time: "18h50 - 21h00 tối 18/4/2025",
+    time: "18h50 - 21h00",
     location: "Trống đồng Place Hoàng Gia - 172 Trường Chinh, TP. Hải Dương",
   },
   {
     id: 3,
     name: " Ăn trưa ngày 19/4/2025",
-    time: "12h00 - 13h30 Ngày 19/4/2025",
+    time: "12h00 - 13h30",
     location: "Nhà hàng khách sạn Nam Cường",
   },
 ];
 
 const Meals: React.FC<Props> = ({}: Props) => {
+  const getMealRef = useRef<GetMealRefProps>(null);
+
+  const { appState } = useContext(AppContext);
+
+  const clickGetMeal = (item: any) => {
+    // setIsLoading(true);
+    // setTimeout(() => {
+    //   setFocusMeal(item);
+    //   setIsLoading(false);
+    //   setIsShow(true);
+    // }, 1000);
+
+    const existItem = appState?.saveMeals?.findIndex(
+      (item2) => item2?.id === item?.id
+    );
+
+    if (existItem !== -1) {
+      getMealRef.current?.showModal(appState?.saveMeals[existItem], true);
+      return;
+    }
+    getMealRef.current?.showModal(item, false);
+  };
+
   return (
     <div className="flex flex-col w-[100vw] relative">
       <div className="flex flex-col relative z-1  h-[100vh] items-center">
-        Phiếu ăn
-        <div className="flex flex-wrap w-full justify-center gap-[20px] items-center h-full">
-          {MEALS_DATA?.map((item) => (
+        <div
+          className={[
+            "flex flex-wrap w-full justify-center gap-[20px] items-center h-full ",
+            styles?.mealContainer,
+          ].join(" ")}
+        >
+          {MEALS_DATA?.map((item: any) => (
             <div
               key={item?.id}
               className="items-center flex flex-col w-full max-w-[350px] bg-[#fff] rounded-[16px] p-[15px] shadow-medium"
@@ -47,13 +78,17 @@ const Meals: React.FC<Props> = ({}: Props) => {
                 </div>
               </div>
               <div className="cursor-pointer flex justify-center mt-[20px] bg-[#2A2E92] p-[10px] rounded-[10px] text-[#fff] text-[14px] font-[500] leading-[21px]">
-                <div className="">Nhận phiếu ăn</div>
+                <div className="" onClick={clickGetMeal?.bind(null, item)}>
+                  Nhận phiếu ăn
+                </div>
               </div>
             </div>
           ))}
         </div>
       </div>
       <div className="flex flex-col items-center image-background items-center justify-center pt-[120px] fixed" />
+
+      <GetMeal ref={getMealRef} />
     </div>
   );
 };

@@ -17,7 +17,7 @@ const Home: React.FC<Props> = ({}: Props) => {
       <div className="bannerContainer">
         <Image src={Banner} alt="Banner" style={{ width: "100%" }} />
       </div>
-      <div className="flex w-full flex-col items-center items-center mt-[30px]">
+      <div className="flex w-full flex-col items-center items-center pt-[30px] image-background">
         <div className="mb-[20px] font-[700] text-[24px] leading-[36px] text-[#0B4E9D]">
           Tin tức
         </div>

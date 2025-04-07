@@ -11,8 +11,8 @@
   display: inline-block;
 
   @media (max-width: 768px) {
-    font-size: 18px;
-    line-height: 24px;
+    font-size: 14px;
+    line-height: 21px;
   }
 }
 
@@ -46,8 +46,8 @@
 
 .logoApp {
   @media (max-width: 768px) {
-    height: 40px;
-    width: 40px;
+    // height: 40px;
+    // width: 40px;
   }
 }
 
@@ -61,8 +61,8 @@
   }
   .txtClub {
     @media (max-width: 768px) {
-      font-size: 10px;
-      line-height: 20px;
+      font-size: 8px;
+      line-height: 16px;
     }
   }
 
@@ -81,6 +81,12 @@
 }
 
 .menuDropDown {
+  @media (min-width: 768px) {
+    display: none;
+  }
+}
+
+.mobileMenu {
   @media (min-width: 768px) {
     display: none;
   }
