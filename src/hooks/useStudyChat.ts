@@ -1,7 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import AppContext from '@/context/appContext';
-import { usePremiumModal } from '@/context/premiumModalContext';
 import { RESPONSE_CODE } from '@/network/config';
 import { chatServices } from '@/services/chatServices';
 import { randomUUID } from '@/utils/helper';
@@ -27,7 +26,6 @@ export const useStudyChat = (noteId: number) => {
   };
   const [state, setState] = useState<StudyChatProps>(initData);
   const bottomRef = useRef<any>(null);
-  const { openPremiumModal } = usePremiumModal();
   useEffect(() => {
     setState(initData);
   }, [noteId]);
@@ -37,7 +35,7 @@ export const useStudyChat = (noteId: number) => {
   const { appState } = useContext(AppContext);
 
   const onChangeQuestion = (text: string) => {
-    setState(prev => ({
+    setState((prev) => ({
       ...prev,
       question: text,
     }));
@@ -56,7 +54,7 @@ export const useStudyChat = (noteId: number) => {
       myQuestion: state?.question,
       id: randomUUID(),
     };
-    setState(prev => ({
+    setState((prev) => ({
       ...prev,
       loading: true,
       chats: [...state?.chats, temp],
@@ -75,7 +73,7 @@ export const useStudyChat = (noteId: number) => {
     if (res?.status === RESPONSE_CODE.SUCCESS) {
       res.data.myQuestion = state?.question;
 
-      setState(prev => ({
+      setState((prev) => ({
         ...prev,
         loading: false,
         chats: [...prev?.chats, res?.data],
@@ -87,17 +85,13 @@ export const useStudyChat = (noteId: number) => {
         scrollToBottom();
       }, 200);
     } else {
-      if (
-        res?.status === RESPONSE_CODE.BAD_REQUEST &&
-        res?.data === 'Max messages in thread'
-      ) {
+      if (res?.status === RESPONSE_CODE.BAD_REQUEST && res?.data === 'Max messages in thread') {
         if (isNullOrEmpty(appState?.userInfo?.vipPackage)) {
-          openPremiumModal();
           toast.info(
             "You've reached the limit! Upgrade to Pro to unlock this feature and continue using it",
           );
         } else {
-          setState(prev => ({
+          setState((prev) => ({
             ...prev,
             outOfQuestion: true,
           }));
@@ -106,7 +100,7 @@ export const useStudyChat = (noteId: number) => {
       } else {
         toast.error('Something went wrong.');
       }
-      setState(prev => ({
+      setState((prev) => ({
         ...prev,
         loading: false,
       }));

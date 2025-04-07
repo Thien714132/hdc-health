@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "build:dev": "cp .env.dev .env.local && yarn build --no-lint",
-    "build:prod": "cp .env.prod .env.local && yarn build",
+    "build:prod": "cp .env.prod .env.local && yarn build --no-lint",
     "check-types": "tsc --pretty --noEmit",
     "check-format": "prettier --check .",
     "check-lint": "eslint . --ext ts --ext tsx --ext js",
@@ -16,8 +16,8 @@
     "test-all": "npm run check-format && npm run check-lint && npm run check-types && npm run build",
     "prepare": "husky install",
     "clean": "rm -rf node_module && rm -rf .next && rm -rf package-lock.json && rm -rf yarn.lock",
-    "deploy:prod": "scp -r .next package.json yarn.lock .env.local root@64.176.216.83:/home/frontend/ai-note-website",
-    "deploy:dev": "scp -r .next package.json yarn.lock .env.local root@103.101.162.135:/home/frontend/ai-note-website"
+    "deploy:prod": "scp -P 24700 -r .next package.json  .env.local root@103.57.221.181:/home/frontend/hdc-health",
+    "deploy:dev": "scp  -r .next package.json yarn.lock .env.local root@103.101.162.135:/home/frontend/ai-note-website"
   },
   "dependencies": {
     "@svgr/webpack": "^8.1.0",
