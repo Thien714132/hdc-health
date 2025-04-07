@@ -1,3 +1,18 @@
+/node_modules
 node_modules
-.next
-.husky
+/.pnp
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
+
+# /public
+
+# testing
+/coverage
+
+# next.js
+/.next/
+/out/
