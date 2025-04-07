@@ -53,10 +53,15 @@ const Meals: React.FC<Props> = ({}: Props) => {
 
   return (
     <div className="flex flex-col w-[100vw] relative">
-      <div className="flex flex-col relative z-1  h-[100vh] items-center">
+      <div
+        className={[
+          "flex flex-col relative z-1  items-center",
+          styles.container,
+        ].join(" ")}
+      >
         <div
           className={[
-            "flex flex-wrap w-full justify-center gap-[20px] items-center h-full ",
+            "flex flex-wrap w-full justify-center gap-[20px] items-center h-full",
             styles?.mealContainer,
           ].join(" ")}
         >

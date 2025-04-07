@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { useRouter } from "next/router";
 import styles from "./index.module.scss";
+import ClbLogo from "../../../public/images/clbLogo.png";
 
 export const AppHeader = () => {
   const router = useRouter();
@@ -34,9 +35,10 @@ export const AppHeader = () => {
           />
           <Image
             rel="icon"
-            src="/images/clbLogo.png"
+            src={ClbLogo}
             height={50}
-            width={50}
+            width={70}
+            // width={50}
             // className={styles.logoApp}
             alt="logo app"
           />
@@ -67,7 +69,7 @@ export const AppHeader = () => {
 
         <div
           className={[
-            "flex-1 flex items-center justify-end gap-[70px] mr-[10px] min-w-[700px]",
+            "flex-1 flex items-center justify-end gap-[50px] mr-[10px] min-w-[700px]",
             styles.menuContainer,
           ].join(" ")}
         >
