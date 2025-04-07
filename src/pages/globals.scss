@@ -46,19 +46,28 @@ body {
   @media (max-width: 768px) {
   }
 }
-// .image-background {
-//   background-image: url("../../public/images/banner.jpeg"); /* Replace with your image path */
-//   background-size: contain; /* Scales the image to cover the element */
-//   // background-position: center; /* Centers the image */
-//   background-repeat: no-repeat;
-//   // height: 100vh; /* Full height of viewport */
-//   width: 100vw;
-// }
+.image-background {
+  background-image: url("../../public/images/background_img.webp"); /* Replace with your image path */
+  background-size: cover; /* Scales the image to cover the element */
+  background-position: center; /* Centers the image */
+  background-repeat: no-repeat;
+  height: 100vh; /* Full height of viewport */
+  width: 100vw;
+}
+
+.image-background2 {
+  background-image: url("../../public/images/background_img.webp"); /* Replace with your image path */
+  background-size: cover; /* Scales the image to cover the element */
+  background-position: center; /* Centers the image */
+  // background-repeat: no-repeat;
+  // height: 100vh; /* Full height of viewport */
+  width: 100%;
+}
 
 .bannerContainer {
   margin-top: 70px;
   @media (max-width: 768px) {
-    margin-top: 65px;
+    margin-top: 110px;
   }
 }
 

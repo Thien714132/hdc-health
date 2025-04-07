@@ -1,9 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 interface AppState {
-  loadingState: boolean;
-  userInfo: UserInfo;
-  currentFolder: string;
-  isLogin: boolean;
+  saveMeals: any[];
 }
 
 interface SignInInterface {
