@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import AppContext from '@/context/appContext';
-import { usePremiumModal } from '@/context/premiumModalContext';
 import { NetWork } from '@/network';
 import { RESPONSE_CODE } from '@/network/config';
 import { API_URL } from '@/network/url';
@@ -10,10 +9,7 @@ import { isNullOrEmpty } from '@/utils/method';
 import { useContext, useState } from 'react';
 import { toast } from 'react-toastify';
 
-export const useCreateNote = (
-  callbackCreateSuccess?: () => void,
-  noteRef?: any,
-) => {
+export const useCreateNote = (callbackCreateSuccess?: () => void, noteRef?: any) => {
   const { appState } = useContext(AppContext);
   const [title, setTitle] = useState<string>('');
   const [attachments, setAttachments] = useState<any | undefined>(undefined);
@@ -22,22 +18,14 @@ export const useCreateNote = (
   const [method, setMethod] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
   const [isShow, setIsShow] = useState<boolean>(false);
-  const [currentFolder, setCurrentFolder] = useState<FolderItem | undefined>(
-    undefined,
-  );
+  const [currentFolder, setCurrentFolder] = useState<FolderItem | undefined>(undefined);
   const [visibleRecordAudio, setVisibleRecordAudio] = useState<boolean>(false);
   const disable = isNullOrEmpty(attachments);
-  const { openPremiumModal } = usePremiumModal();
 
   const isLimitNote =
-    appState?.userInfo?.amount <= 0 &&
-    isNullOrEmpty(appState?.userInfo?.vipPackage);
+    appState?.userInfo?.amount <= 0 && isNullOrEmpty(appState?.userInfo?.vipPackage);
 
-  console.log(
-    'attachments',
-    appState?.userInfo?.amount,
-    appState?.userInfo?.vipPackage,
-  );
+  console.log('attachments', appState?.userInfo?.amount, appState?.userInfo?.vipPackage);
 
   // const isLimitNote =
   //   appState?.userInfo?.amount <= 0 && !appState?.userInfo?.vipPackage;
@@ -104,13 +92,8 @@ export const useCreateNote = (
 
   const startGenerate = async () => {
     // logEventTracking(FirebaseLogEvent.robonote_new_gen)
-    console.log(
-      'attachments',
-      appState?.userInfo?.amount,
-      appState?.userInfo?.vipPackage,
-    );
+    console.log('attachments', appState?.userInfo?.amount, appState?.userInfo?.vipPackage);
     if (isLimitNote) {
-      openPremiumModal();
       return;
     }
     setLoading(true);
@@ -124,8 +107,7 @@ export const useCreateNote = (
     }
     if (
       attachments?.size > 0 &&
-      (method === NEW_NOTE_METHODS.UPLOAD_FILE ||
-        method === NEW_NOTE_METHODS.RECORD_AUDIO)
+      (method === NEW_NOTE_METHODS.UPLOAD_FILE || method === NEW_NOTE_METHODS.RECORD_AUDIO)
     ) {
       body.append('file', attachments);
     }
@@ -137,10 +119,7 @@ export const useCreateNote = (
       body.append('folderId', currentFolder?.id ?? '');
     }
 
-    const res = await NetWork.postFormData(
-      getRequestUrl(API_URL.WEB_NOTES),
-      body,
-    );
+    const res = await NetWork.postFormData(getRequestUrl(API_URL.WEB_NOTES), body);
     if (res?.status === RESPONSE_CODE.SUCCESS) {
       // logEvent(FirebaseLogEvent.robonote_new_gen_success)
       // if (!isShowedRateApp) {
@@ -158,19 +137,14 @@ export const useCreateNote = (
       callbackCreateSuccess?.();
       // await getUserInfo();
     } else {
-      toast.error(
-        typeof res?.data === 'string' ? res?.data : 'Something went wrong',
-      );
+      toast.error(typeof res?.data === 'string' ? res?.data : 'Something went wrong');
       if (res?.data.includes('violates our guidelines')) {
         // logEvent(FirebaseLogEvent.robonote_new_gen_nsfw)
       }
-      setError(
-        res?.data?.errorMessages ??
-          'An error occurred. Please try again later.',
-      );
+      setError(res?.data?.errorMessages ?? 'An error occurred. Please try again later.');
       if (res?.data.includes('No more free notes')) {
         // navigate(APP_SCREEN.PAY_WALL_SCREEN, {})
-        openPremiumModal();
+
         setError('No more free notes.');
       } else {
         // logEvent(FirebaseLogEvent.robonote_new_gen_noassist)
