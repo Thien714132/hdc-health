@@ -1,0 +1,11 @@
+.mobileNews {
+  @media (min-width: 768px) {
+    display: none;
+  }
+}
+
+.webNews {
+  @media (max-width: 768px) {
+    display: none;
+  }
+}
