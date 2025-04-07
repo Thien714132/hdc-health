@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { AppHeader } from "@/components/AppHeader";
 import LoadingModal from "@/components/LoadingModal";
@@ -10,6 +9,7 @@ import Head from "next/head";
 import { ToastContainer } from "react-toastify";
 import "../pages/globals.scss";
 import RouterLoadingHandler from "./RouterLoadingHandler";
+import { useRouter } from "next/router";
 
 const openSans = localFont({
   src: [
@@ -72,6 +72,8 @@ const openSans = localFont({
 });
 
 export default function MyApp({ Component, pageProps }: any) {
+  const router = useRouter();
+
   return (
     <>
       <Head>
@@ -108,7 +110,7 @@ export default function MyApp({ Component, pageProps }: any) {
       >
         <AppProvider>
           <LoadingProvider>
-            <AppHeader />
+            {!router?.asPath?.includes("scan") && <AppHeader />}
             <ToastContainer />
             <LoadingModal />
             <RouterLoadingHandler />
