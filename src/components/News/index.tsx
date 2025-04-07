@@ -1,7 +1,6 @@
-import styles from "./index.module.scss";
 import Image from "next/image";
 import template from "../../../public/images/template.png";
-import useCheckMobileScreen from "@/hooks/useCheckMobileScreen";
+import styles from "./index.module.scss";
 
 const DATA_NEWS = [
   {
@@ -32,7 +31,7 @@ const DATA_NEWS = [
   },
 ];
 
-export const News = () => {
+export const NewsList = () => {
   //   console.log();
   return (
     <div>

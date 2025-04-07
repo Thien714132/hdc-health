@@ -1,28 +1,29 @@
-/* eslint-disable jsx-a11y/alt-text */
 import Image from "next/image";
 import { useState } from "react";
 import IconMenu from "../../../public/svg/icMenu.svg";
 import styles from "./index.module.scss";
+import { useRouter } from "next/router";
 
 export const AppHeader = () => {
-  //   const router = useRouter();
+  const router = useRouter();
   const [isShow, setIsShow] = useState<boolean>(false);
+  const currentRoute = router?.asPath;
 
   const toggleBtn = () => {
     setIsShow(!isShow);
   };
 
   const MENU_DATA = [
-    "Tin tức",
-    "Tài liệu hội nghị",
-    "Câu hỏi hoặc tham luận",
-    "Thư viện ảnh",
+    { id: 1, name: "Tin tức", route: "/" },
+    { id: 2, name: "Tài liệu hội nghị", route: "/documents" },
+    { id: 3, name: "Câu hỏi hoặc tham luận", route: "/questions" },
+    { id: 4, name: "Thư viện ảnh", route: "/pictures" },
   ];
 
   return (
     <div className="flex flex-col w-full fixed top-0 left-0 z-50">
       {/* Header Section */}
-      <div className="w-[100vw] flex items-center bg-[rgba(255,255,255,0.9)]  p-[10px] border-b-[#0052d4] border-b-[1px] border-b-solid header">
+      <div className="w-[100vw] flex items-center bg-[rgba(255,255,255,1)]  p-[10px] border-b-[#0052d4] border-b-[1px] border-b-solid header">
         <Image
           rel="icon"
           src="/logoApp.png"
@@ -70,10 +71,14 @@ export const AppHeader = () => {
           {MENU_DATA?.map((item) => {
             return (
               <div
-                key={item}
+                onClick={() => {
+                  router?.push(item?.route);
+                }}
+                key={item?.id}
                 className="no-wrap group relative text-[#22233E] text-[16px] leading-[24px] font-[600] cursor-pointer transition-colors duration-300 hover:text-[#0052d4]"
+                style={currentRoute === item?.route ? { color: "#0052d4" } : {}}
               >
-                {item}
+                {item?.name}
                 <span className="absolute left-0 -bottom-1 h-[2px] w-0 bg-[#0052d4] transition-all duration-300 group-hover:w-full"></span>
               </div>
             );
@@ -98,14 +103,16 @@ export const AppHeader = () => {
             {MENU_DATA?.map((item) => {
               return (
                 <div
-                  key={item}
+                  key={item?.id}
                   className="w-full flex justify-center bg-[#EAF8FF] rounded-[16px] p-[10px] no-wrap group relative text-[#22233E] text-[16px] leading-[24px] font-[600] cursor-pointer transition-colors duration-300 hover:text-[#0052d4]"
                   onClick={(e: React.MouseEvent) => {
                     e.stopPropagation();
+                    router?.push(item?.route);
                     console.log("alooo");
+                    setIsShow(false);
                   }}
                 >
-                  {item}
+                  {item?.name}
                   <span className="absolute left-0 -bottom-1 h-[2px] w-0 bg-[#0052d4] transition-all duration-300 group-hover:w-full"></span>
                 </div>
               );
