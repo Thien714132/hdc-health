@@ -4,7 +4,7 @@ export default function Document() {
   return (
     <Html lang="en">
       <Head>
-        <link rel="icon" href="/logoApp.png" type="image/png" />
+        <link rel="icon" href="https://hdc.health.vn/logo" type="image/png" />
       </Head>
       <body>
         <Main />

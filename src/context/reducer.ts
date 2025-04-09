@@ -15,6 +15,18 @@ export const reducer = (prevState: AppState, action: Action) => {
         saveMeal: prevState?.saveMeals.push(action.payload),
       };
 
+    case APPLICATION_ACTION_TYPE.SAVE_DATA_GENERAL:
+      return {
+        ...prevState,
+        general_data: action.payload,
+      };
+
+    case APPLICATION_ACTION_TYPE.SAVE_CURRENT_SESSION:
+      return {
+        ...prevState,
+        current_session: action.payload,
+      };
+
     default:
       return prevState;
   }

@@ -10,14 +10,14 @@ export const AppHeader = () => {
   const MENU_DATA = [
     { id: 1, name: "Tin tức", route: "/" },
     { id: 2, name: "Tài liệu hội nghị", route: "/documents" },
-    { id: 3, name: "Câu hỏi hoặc tham luận", route: "/questions" },
+    { id: 3, name: "Đặt câu hỏi tham luận", route: "/conference" },
     { id: 4, name: "Thư viện ảnh", route: "/pictures" },
   ];
 
   const MENU_DATA_MOBILE = [
     { id: 1, name: "Tin tức", route: "/" },
     { id: 2, name: "Tài liệu", route: "/documents" },
-    { id: 3, name: "Câu hỏi ", route: "/questions" },
+    { id: 3, name: "Đặt câu hỏi tham luận", route: "/conference" },
   ];
 
   return (
@@ -93,7 +93,7 @@ export const AppHeader = () => {
 
       <div
         className={[
-          "bg-[rgba(255,255,255,1)] p-[10px] flex items-end gap-[10px]",
+          "bg-[rgba(255,255,255,1)] p-[10px] flex items-end gap-[10px] justify-center",
           styles["box_shadow"],
           styles.mobileMenu,
         ].join(" ")}
@@ -102,7 +102,7 @@ export const AppHeader = () => {
           return (
             <div
               key={item?.id}
-              className="w-full flex justify-center bg-[#EAF8FF] rounded-[16px] no-wrap group relative text-[#0052d4] text-[14px] leading-[21px] font-[600] cursor-pointer transition-colors duration-300 hover:text-[#0052d4]"
+              className="flex justify-center bg-[#EAF8FF] rounded-[16px] no-wrap group relative text-[#0052d4] text-[14px] leading-[21px] font-[600] cursor-pointer transition-colors duration-300 hover:text-[#0052d4] pl-[10px] pr-[10px]"
               onClick={(e: React.MouseEvent) => {
                 e.stopPropagation();
                 router?.push(item?.route);

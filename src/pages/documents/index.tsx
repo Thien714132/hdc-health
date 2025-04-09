@@ -1,8 +1,11 @@
-import React from "react";
+import AppContext from "@/context/appContext";
+import React, { useContext } from "react";
 
 type Props = { isLogin: boolean };
 
 const Documents: React.FC<Props> = ({}: Props) => {
+  const {} = useContext(AppContext);
+
   return (
     <div className="flex flex-col w-[100vw]">
       <div

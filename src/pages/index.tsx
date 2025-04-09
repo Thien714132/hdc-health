@@ -1,11 +1,12 @@
 import { NewsList } from "@/components/News";
-import React from "react";
 import Image from "next/image";
+import React from "react";
 import Banner from "../../public/images/banner.jpeg";
 
 type Props = { isLogin: boolean };
 
 const Home: React.FC<Props> = ({}: Props) => {
+  // useGeneral();
   return (
     <div className="flex flex-col w-[100vw]">
       {/* <div

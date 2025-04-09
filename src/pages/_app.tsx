@@ -6,10 +6,10 @@ import { LoadingProvider } from "@/context/loadingContext";
 import "@/pages/globals.scss";
 import localFont from "next/font/local";
 import Head from "next/head";
+import { useRouter } from "next/router";
 import { ToastContainer } from "react-toastify";
 import "../pages/globals.scss";
 import RouterLoadingHandler from "./RouterLoadingHandler";
-import { useRouter } from "next/router";
 
 const openSans = localFont({
   src: [
