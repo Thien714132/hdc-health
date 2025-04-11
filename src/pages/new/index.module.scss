@@ -1,0 +1,28 @@
+.mealContainer {
+  @media (max-width: 768px) {
+    padding-top: 150px;
+  }
+}
+
+.container {
+  height: 100vh;
+  @media (max-width: 768px) {
+    height: 100%;
+    padding-bottom: 100px;
+  }
+}
+
+.contentField {
+  @media (max-width: 768px) {
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-top: 130px;
+  }
+}
+
+.contentContainer {
+  @media (max-width: 768px) {
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+}

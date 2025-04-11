@@ -37,14 +37,14 @@ const Conference: React.FC<Props> = ({}: Props) => {
               className=" hover:bg-[#ebf6fb] bg-[#fff] shadow-medium w-[100%] max-w-[350px] p-[10px] rounded-[16px]"
               key={item?.id}
             >
-              <div className="justify-center flex pb-[10px] text-[20px] leading-[30px] font-[700] text-[#0052d4] border-b-[1px] border-b-[#0052d4] border-b-solid">
+              <div className="justify-center flex pb-[7px] text-[18px] leading-[34px] font-[700] text-[#0052d4] border-b-[1px] border-b-[#0052d4] border-b-solid">
                 {item?.session}
               </div>
               <div className="flex-1 w-full flex flex-col mt-[20px] items-center pb-[10px] gap-[10px]">
-                <div className="text-[16px] text-[#22233E] leading-[24px] font-[500]">
+                <div className="text-[14px] text-[#22233E] leading-[21px] font-[500]">
                   {item?.title}
                 </div>
-                <div className="text-[16px] text-[#22233E] leading-[24px] font-[500] text-center">
+                <div className="text-[14px] text-[#22233E] leading-[21px] font-[500] text-center">
                   {item?.content}
                 </div>
               </div>

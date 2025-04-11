@@ -23,8 +23,21 @@ export const useGeneral = () => {
     setLoading(false);
   };
 
+  const fetchDataDocument = async () => {
+    setLoading(true);
+    const res = await NetWork.get(getRequestUrl(API_URL.DOCUMENT));
+    if (res?.status === RESPONSE_CODE.SUCCESS) {
+      dispatch({
+        type: APPLICATION_ACTION_TYPE.SAVE_DOCUMENTS,
+        payload: res?.data,
+      });
+    }
+    setLoading(false);
+  };
+
   useEffect(() => {
     fetchData();
+    fetchDataDocument();
   }, []);
 
   return { fetchData, loading };

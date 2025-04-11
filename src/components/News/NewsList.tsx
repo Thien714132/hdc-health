@@ -1,38 +1,18 @@
-import Image from "next/image";
-import template from "../../../public/images/template.png";
+/* eslint-disable @next/next/no-img-element */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { useNews } from "@/hooks/useNews";
 import styles from "./index.module.scss";
-
-const DATA_NEWS = [
-  {
-    id: 1,
-    title:
-      "Thông báo tổ chức hội nghị thường niên câu lạc bộ giám đôc bệnh viện các tỉnh phía Bắc Năm 2025",
-  },
-  {
-    id: 2,
-    title:
-      "Thông báo tổ chức hội nghị thường niên câu lạc bộ giám đôc bệnh viện các tỉnh phía Bắc Năm 2025",
-  },
-  {
-    id: 1,
-    title:
-      "Thông báo tổ chức hội nghị thường niên câu lạc bộ giám đôc bệnh viện các tỉnh phía Bắc Năm 2025",
-  },
-  {
-    id: 3,
-    title:
-      "Thông báo tổ chức hội nghị thường niên câu lạc bộ giám đôc bệnh viện các tỉnh phía Bắc Năm 2025",
-  },
-
-  {
-    id: 4,
-    title:
-      "Thông báo tổ chức hội nghị thường niên câu lạc bộ giám đôc bệnh viện các tỉnh phía Bắc Năm 2025",
-  },
-];
+import { useRouter } from "next/router";
 
 export const NewsList = () => {
-  //   console.log();
+  const { newsData } = useNews();
+
+  const router = useRouter();
+
+  const onClick = (id: number) => {
+    router.push("/new?id=" + id);
+  };
+
   return (
     <div>
       <div
@@ -41,19 +21,20 @@ export const NewsList = () => {
           styles.mobileNews,
         ].join(" ")}
       >
-        {DATA_NEWS?.map((item) => {
+        {newsData?.map((item: any) => {
           return (
             <div
+              onClick={onClick?.bind(null, item?.id)}
               key={item?.id}
               className={[
-                "w-full h-[250px] flex flex-col relative mb-[30px]  mr-[20px] last:mr-[0px] rounded-[20px] cursor-pointer",
+                "w-[90vw] h-[250px] flex flex-col relative mb-[30px] gap-[20px] rounded-[20px] cursor-pointer",
               ].join(" ")}
             >
-              <div className="w-full h-full bg-[#E7F2FF] flex-1 rounded-[20px]">
-                <Image
-                  src={template}
-                  className="h-full w-full rounded-[20px]"
-                  alt="alo"
+              <div className=" h-full bg-[#E7F2FF] flex-1 rounded-[20px]">
+                <img
+                  src={item?.banner}
+                  className="h-full w-full rounded-[20px] object-cover"
+                  alt="banner"
                 />
               </div>
               <div
@@ -78,57 +59,60 @@ export const NewsList = () => {
       >
         <div className="flex flex-1 items-center max-w-[1330] w-full justify-between mb-[20px]">
           <div
+            onClick={onClick?.bind(null, newsData[0]?.id)}
             className={[
               "w-[700px] h-[300px] flex flex-col relative mr-[20px] cursor-pointer",
             ].join(" ")}
           >
             <div className="rounded-[20px] w-full h-full bg-[#E7F2FF] flex-1">
-              <Image
-                src={template}
-                className="h-full w-full rounded-[20px]"
-                alt="alo"
+              <img
+                src={newsData[0]?.banner}
+                className="h-full w-full rounded-[20px] object-cover"
+                alt="banner"
               />
             </div>
             <div className="p-[10px] flex flex-col justify-end rounded-b-[20px] absolute bottom-0 h-[90px] w-[100%] bg-gradient-to-t w-full from-[#0B4E9D] to-transparent absolute bottom-0">
               {" "}
               <div className="limited-lines-2 text-[#fff] text-[16px] leading-[24px] font-[600]">
-                {DATA_NEWS[0]?.title}
+                {newsData[0]?.title}
               </div>
             </div>
           </div>
           <div
+            onClick={onClick?.bind(null, newsData[1]?.id)}
             className={[
               "w-[500px] h-[300px] flex flex-col relative cursor-pointer",
             ].join(" ")}
           >
             <div className="rounded-[20px] w-full h-full bg-[#E7F2FF] flex-1">
-              <Image
-                src={template}
-                className="h-full w-full rounded-[20px]"
-                alt="alo"
+              <img
+                src={newsData[1]?.banner}
+                className="h-full w-full rounded-[20px] object-cover"
+                alt="banner"
               />
             </div>
             <div className="p-[10px] flex flex-col justify-end rounded-b-[20px] absolute bottom-0 h-[90px] w-[100%] bg-gradient-to-t w-full from-[#0B4E9D] to-transparent absolute bottom-0">
               <div className="limited-lines-2 text-[#fff] text-[16px] leading-[24px] font-[600]">
-                {DATA_NEWS[1]?.title}
+                {newsData[1]?.title}
               </div>
             </div>
           </div>
         </div>
-        <div className="flex flex-1 items-center max-w-[1200px] w-full justify-between ">
-          {DATA_NEWS?.slice(2, 5)?.map((item) => {
+        <div className="flex flex-1 items-center max-w-[1200px] w-full justify-between flex-wrap">
+          {newsData?.slice(2, newsData?.length)?.map((item) => {
             return (
               <div
+                onClick={onClick?.bind(null, item?.id)}
                 key={item?.id}
                 className={[
-                  "w-[390px] h-[250px] flex flex-col relative mb-[30px]  mr-[20px] last:mr-[0px] rounded-[20px] cursor-pointer",
+                  "w-[370px] h-[250px] flex flex-col relative mb-[30px] rounded-[20px] cursor-pointer",
                 ].join(" ")}
               >
                 <div className="w-full h-full bg-[#E7F2FF] flex-1 rounded-[20px]">
-                  <Image
-                    src={template}
-                    className="h-full w-full rounded-[20px]"
-                    alt="alo"
+                  <img
+                    src={item?.banner}
+                    className="h-full w-full rounded-[20px] object-cover"
+                    alt="banner"
                   />
                 </div>
                 <div

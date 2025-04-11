@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-empty-object-type */
 /* eslint-disable react/display-name */
 import { NetWork } from "@/network";
 import { RESPONSE_CODE } from "@/network/config";

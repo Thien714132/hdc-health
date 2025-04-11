@@ -16,6 +16,12 @@ import { LoadingIndicator } from "../LoadingIndicator";
 import styles from "./index.module.scss";
 import AppContext from "@/context/appContext";
 import { APPLICATION_ACTION_TYPE } from "@/context/action";
+import { NetWork } from "@/network";
+import { getRequestUrl } from "@/network/utils";
+import { API_URL } from "@/network/url";
+import { RESPONSE_CODE } from "@/network/config";
+import { toast } from "react-toastify";
+import moment from "moment";
 
 type GetMealProps = {};
 
@@ -71,34 +77,102 @@ export const GetMeal = forwardRef<GetMealRefProps, GetMealProps>(
       closeModal,
     }));
 
-    const onGetMeal = () => {
+    function isBeforeTwoHoursFrom(futureTime: string) {
+      const FORMAT = "DD/MM/YYYY HH:mm:ss";
+      const now = moment();
+      const future = moment(futureTime, FORMAT);
+
+      const futureMinus2Hours = future.clone().subtract(2, "hours");
+
+      return now.isBefore(futureMinus2Hours);
+    }
+
+    const checkTime = () => {
+      switch (state?.meal?.title) {
+        case "Ăn trưa ngày 18/4/2025": {
+          const result = isBeforeTwoHoursFrom("18/4/2025 11:30:00");
+          return result;
+        }
+
+        case "Tiệc chào mừng tối 18/4/2025": {
+          const result = isBeforeTwoHoursFrom("18/4/2025 18:50:00");
+          return result;
+        }
+        case "Ăn trưa ngày 19/4/2025": {
+          const result = isBeforeTwoHoursFrom("19/4/2025 12:00:00");
+          return result;
+        }
+        default:
+          break;
+      }
+    };
+
+    const onGetMeal = async () => {
+      const result = checkTime();
+
+      if (!result) {
+        setState((prev) => ({
+          ...prev,
+          error: "Đã quá giờ nhận phiếu ăn",
+        }));
+        toast.error("Đã quá giờ nhận phiếu ăn");
+        return;
+      }
       if (isNullOrEmpty(state?.name) || isNullOrEmpty(state?.community)) {
         setState((prev) => ({
           ...prev,
-          error: "Họ và tên hoặc tên đoàn không được để trống",
+          error: "Họ và tên, tên đoàn không được để trống",
         }));
+        toast.error("Họ và tên, tên đoàn không được để trống");
         return;
       }
-
       setState((prev) => ({
         ...prev,
         loading: true,
+        error: undefined,
       }));
-      dispatch({
-        type: APPLICATION_ACTION_TYPE.SAVE_MEAL,
-        payload: {
-          ...state?.meal,
-          userName: state?.name,
-          community: state?.community,
-        },
-      });
-      setTimeout(() => {
+
+      const params = {
+        mealTicketId: state?.meal?.id,
+        name: state?.name,
+        community: state?.community,
+      };
+
+      const res = await NetWork.post(
+        getRequestUrl(API_URL.MEAL_TICKET),
+        params
+      );
+
+      if (res?.status === RESPONSE_CODE.SUCCESS) {
+        dispatch({
+          type: APPLICATION_ACTION_TYPE.SAVE_MEAL,
+          payload: {
+            ...state?.meal,
+            userName: state?.name,
+            community: state?.community,
+          },
+        });
         setState((prev) => ({
           ...prev,
           loading: false,
           isSuccess: true,
         }));
-      }, 1000);
+      } else {
+        toast.error(res?.data);
+        setState((prev) => ({
+          ...prev,
+          loading: false,
+          isSuccess: false,
+        }));
+      }
+
+      // setTimeout(() => {
+      //   setState((prev) => ({
+      //     ...prev,
+      //     loading: false,
+      //     isSuccess: true,
+      //   }));
+      // }, 1000);
     };
     console.log("asdasda___", state?.meal);
     const captureRef = useRef<any>(null);
@@ -148,7 +222,7 @@ export const GetMeal = forwardRef<GetMealRefProps, GetMealProps>(
               </div>
               <div className="flex flex-col gap-[10px] mt-[20px] items-center">
                 <div className="text-[16px] leading-[24px] font-[700] text-[#2A2E92]">
-                  {state?.meal?.name}
+                  {state?.meal?.title}
                 </div>
                 <div
                   className={[
@@ -158,9 +232,13 @@ export const GetMeal = forwardRef<GetMealRefProps, GetMealProps>(
                 >
                   <strong>Thời gian:</strong> {state?.meal?.time}
                 </div>
-                <div className="w-full text-[16px] text-[#2A2E92] font-[500] leading-[24px] text-center justify-center pb-[100px]">
+                <div className="w-full text-[16px] text-[#2A2E92] font-[500] leading-[24px] text-center justify-center">
                   <strong>Địa điểm: </strong>
                   {state?.meal?.location}
+                </div>
+                <div className="w-full text-[16px] text-[#2A2E92] font-[500] leading-[24px] text-center justify-center pb-[100px]">
+                  <strong>Bàn: </strong>
+                  {state?.meal?.tableName}
                 </div>
               </div>
               <div className="italic text-[14px] leading-[21px] font-[400] text-[#ec0f00]">
@@ -220,6 +298,13 @@ export const GetMeal = forwardRef<GetMealRefProps, GetMealProps>(
                   }));
                 }}
               />
+            </div>
+            <div className="italic w-full flex justify-start mt-[10px] text-[#98A2B3]">
+              <div className="text-[#FF0000]">Lưu ý:</div> <br />- Đại biểu cần
+              nhập đúng họ tên và tên đoàn đã đăng ký với BTC Mỗi
+              <br />- Đại biểu chỉ nhận 01 phiếu ăn/ 1 bữa ăn
+              <br />- Chức năng nhận phiếu ăn sẽ bị khóa 2 tiếng trước thời gian
+              bữa ăn
             </div>
             {!isNullOrEmpty(state?.error) && (
               <div className="tex-[18px] leading-[23px] font-[500] text-[#FF0000] mb-[5px] mt-[20px] italic">

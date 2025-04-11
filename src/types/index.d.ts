@@ -3,4 +3,5 @@ interface AppState {
   saveMeals: any[];
   general_data: any;
   current_session: any;
+  documents: any[];
 }

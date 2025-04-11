@@ -1,15 +1,23 @@
-'use client';
+"use client";
 
-import React, {
-  useEffect,
-  useRef,
+import { NetWork } from "@/network";
+import { RESPONSE_CODE } from "@/network/config";
+import { API_URL } from "@/network/url";
+import { getRequestUrl } from "@/network/utils";
+import { LoadingOutlined } from "@ant-design/icons";
+import { Spin } from "antd";
+import Quill from "quill";
+import "quill/dist/quill.snow.css";
+import {
+  CSSProperties,
   forwardRef,
+  useEffect,
   useImperativeHandle,
-} from 'react';
-import Quill from 'quill';
-import 'quill/dist/quill.snow.css';
-import { Spin } from 'antd';
-import { LoadingOutlined } from '@ant-design/icons';
+  useRef,
+  useState,
+} from "react";
+import { toast } from "react-toastify";
+import ImageUploader from "../ImageUploader/ImageUploader";
 
 // Define the ref type for the RichTextEditor component
 export type RichTextEditorHandle = {
@@ -17,80 +25,102 @@ export type RichTextEditorHandle = {
 };
 
 type RichTextEditorProps = {
-  htmlContent: string;
-  onClose: () => void;
-  onSave: (text: string) => void;
-  loading: boolean;
+  style?: CSSProperties;
 };
 
 const RichTextEditor = forwardRef<RichTextEditorHandle, RichTextEditorProps>(
-  ({ htmlContent, onClose, onSave, loading }, ref) => {
+  ({ style }, ref) => {
     const editorRef = useRef<HTMLDivElement>(null);
     const quillRef = useRef<Quill | null>(null);
+    const [title, setTitle] = useState<string>("");
+    const [banner, setBanner] = useState<string>("");
+    const [loading, setLoading] = useState<boolean>(false);
+
+    const onCreate = async () => {
+      setLoading(true);
+      const content = getContent();
+      const params = {
+        title,
+        banner,
+        content,
+      };
+
+      const res = await NetWork.post(getRequestUrl(API_URL.POST), params);
+
+      if (res?.status === RESPONSE_CODE.SUCCESS) {
+        toast.success("Tạo thành công");
+        setTitle("");
+        setBanner("");
+      } else {
+        toast.error("Tạo thất bại");
+      }
+      setLoading(false);
+    };
 
     useEffect(() => {
       if (!editorRef.current) return;
 
       quillRef.current = new Quill(editorRef.current, {
-        theme: 'snow',
+        theme: "snow",
         modules: {
           toolbar: [
             [{ header: [1, 2, 3, false] }],
-            ['bold', 'italic', 'underline', 'strike'],
-            [{ list: 'ordered' }, { list: 'bullet' }],
-            ['link', 'image'],
-            ['clean'],
+            ["bold", "italic", "underline", "strike"],
+            [{ list: "ordered" }, { list: "bullet" }],
+            ["link", "image"],
+            ["clean"],
           ],
         },
       });
 
-      // Set initial content
-      quillRef.current.clipboard.dangerouslyPasteHTML(htmlContent);
-
       return () => {
-        quillRef.current = null; // Cleanup
+        quillRef.current = null;
       };
-    }, [htmlContent]);
-
-    // Function to get editor content
+    }, []);
     const getContent = () => {
-      onSave(quillRef.current ? quillRef.current.root.innerHTML : '');
-      // return quillRef.current ? quillRef.current.root.innerHTML : '';
+      return quillRef.current ? quillRef.current.root.innerHTML : "";
     };
-
-    // Expose the getContent function to the parent component
     useImperativeHandle(ref, () => ({
       getContent,
     }));
 
     return (
-      <div className="flex flex-col h-full w-full">
-        <div ref={editorRef} style={{ height: '100%', width: '100%' }} />
-        <div className="flex gap-[20px] w-full justify-end items-center mt-[10px]">
-          <div
-            className="cursor-pointer h-[40px] w-[100px] bg-[#F2F2F7] flex items-center justify-center text-[#000000] rounded-[16px]"
-            onClick={onClose}>
-            Cancel
-          </div>
-          <div
-            onClick={getContent}
-            className="cursor-pointer h-[40px] w-[100px] bg-[#000] flex items-center justify-center text-[#fff] rounded-[16px]">
-            {loading ? (
-              <Spin
-                indicator={
-                  <LoadingOutlined spin style={{ color: '#F2F2F7' }} />
-                }
-                size="default"
-              />
-            ) : (
-              'Save'
-            )}
+      <div className="flex flex-col mt-[100px] w-[90%]">
+        <div className="flex flex-col justify-center mb-[20px]">
+          <div className="mb-[10px] font-[700]">Title</div>
+          <input
+            value={title}
+            className="bg-[#fff] border-[rgba(1,1,1,0.1)] border-[1px] border-solid pl-[10px] pr-[10px]"
+            onChange={(e) => {
+              setTitle(e?.target?.value);
+            }}
+          />
+        </div>
+        <div className="mb-[10px] font-[700]">Nội Dung</div>
+        <div ref={editorRef} style={style} />
+        <div className="mb-[10px] font-[700]">Ảnh</div>
+        <div className="flex mb-[200px]">
+          <ImageUploader getUuid={setBanner} />
+          <div className="h-[40px] flex-1 flex justify-end">
+            <div
+              onClick={onCreate}
+              className="cursor-pointer h-[40px] w-[100px] bg-[#0052d4] text-[#fff] font-bold items-center flex justify-center rounded-full"
+            >
+              {loading ? (
+                <Spin
+                  indicator={<LoadingOutlined spin style={{ color: "#fff" }} />}
+                  size="default"
+                />
+              ) : (
+                "Tạo"
+              )}
+            </div>
           </div>
         </div>
       </div>
     );
-  },
+  }
 );
 
-RichTextEditor.displayName = 'RichTextEditor';
+RichTextEditor.displayName = "RichTextEditor";
 export default RichTextEditor;

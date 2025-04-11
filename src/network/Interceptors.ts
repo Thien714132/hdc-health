@@ -88,9 +88,9 @@ export const LogInterceptor = {
     }
 
     if (response) {
-      toast.error(`Request failed: ${response?.status}`, {
-        position: "top-right",
-      });
+      // toast.error(`Request failed: ${response?.status}`, {
+      //   position: "top-right",
+      // });
       console.log(
         `<<< ${config?.method}: ${config?.url} status:${response?.status}`
       );

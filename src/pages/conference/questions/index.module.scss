@@ -8,10 +8,51 @@
   height: 100vh;
   justify-content: center;
   @media (max-width: 768px) {
-    height: 100%;
-    padding-bottom: 100px;
-    padding-top: 150px;
+    justify-content: start;
+    flex: 1;
+    padding-top: 30px;
+    // height: 100%;
+    // padding-bottom: 100px;
+    // padding-top: 40px;
+    // margin-left: 10px;
+    // margin-right: 10px;
+  }
+}
+
+.contentContainer {
+  @media (min-width: 768px) {
+    height: 100vh;
+    margin-top: 100px;
+  }
+  @media (max-width: 768px) {
+    margin-top: 90px;
+  }
+}
+
+.btnAdd {
+  @media (max-width: 768px) {
+    display: none;
+  }
+}
+
+.header {
+  @media (max-width: 768px) {
+    margin-left: 10px;
+  }
+}
+
+.listContainer {
+  @media (max-width: 768px) {
     margin-left: 10px;
     margin-right: 10px;
+    margin-top: 10px;
+    // max-height: calc(100vh - 270px);
+    flex: 1;
+  }
+}
+
+.floatBtn {
+  @media (min-width: 768px) {
+    display: none;
   }
 }

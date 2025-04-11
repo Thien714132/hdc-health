@@ -27,6 +27,12 @@ export const reducer = (prevState: AppState, action: Action) => {
         current_session: action.payload,
       };
 
+    case APPLICATION_ACTION_TYPE.SAVE_DOCUMENTS:
+      return {
+        ...prevState,
+        documents: action.payload,
+      };
+
     default:
       return prevState;
   }

@@ -11,7 +11,6 @@ export const AppHeader = () => {
     { id: 1, name: "Tin tức", route: "/" },
     { id: 2, name: "Tài liệu hội nghị", route: "/documents" },
     { id: 3, name: "Đặt câu hỏi tham luận", route: "/conference" },
-    { id: 4, name: "Thư viện ảnh", route: "/pictures" },
   ];
 
   const MENU_DATA_MOBILE = [
@@ -69,7 +68,7 @@ export const AppHeader = () => {
 
         <div
           className={[
-            "flex-1 flex items-center justify-end gap-[50px] mr-[10px] min-w-[700px]",
+            "flex-1 flex items-center justify-end gap-[100px] mr-[10px] min-w-[700px]",
             styles.menuContainer,
           ].join(" ")}
         >
@@ -80,7 +79,7 @@ export const AppHeader = () => {
                   router?.push(item?.route);
                 }}
                 key={item?.id}
-                className="no-wrap group relative text-[#22233E] text-[16px] leading-[24px] font-[600] cursor-pointer transition-colors duration-300 hover:text-[#0052d4]"
+                className="no-wrap group relative text-[#22233E] text-[14px] leading-[21px] font-[600] cursor-pointer transition-colors duration-300 hover:text-[#0052d4]"
                 style={currentRoute === item?.route ? { color: "#0052d4" } : {}}
               >
                 {item?.name}
