@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import Image from "next/image";
 import { useRouter } from "next/router";
 import styles from "./index.module.scss";
@@ -24,9 +25,9 @@ export const AppHeader = () => {
       {/* Header Section */}
       <div className="w-[100vw] flex items-center bg-[rgba(255,255,255,1)]  p-[10px] border-b-[#0052d4] border-b-[1px] border-b-solid header">
         <div className="flex items-center gap-[5px]">
-          <Image
+          <img
             rel="icon"
-            src="/logoApp.png"
+            src="https://hdc.health.vn/logo"
             height={50}
             width={50}
             className={styles.logoApp}
