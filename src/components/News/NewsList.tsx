@@ -78,25 +78,27 @@ export const NewsList = () => {
               </div>
             </div>
           </div>
-          <div
-            onClick={onClick?.bind(null, newsData[1]?.id)}
-            className={[
-              "w-[500px] h-[300px] flex flex-col relative cursor-pointer",
-            ].join(" ")}
-          >
-            <div className="rounded-[20px] w-full h-full bg-[#E7F2FF] flex-1">
-              <img
-                src={newsData[1]?.banner}
-                className="h-full w-full rounded-[20px] object-cover"
-                alt="banner"
-              />
-            </div>
-            <div className="p-[10px] flex flex-col justify-end rounded-b-[20px] absolute bottom-0 h-[90px] w-[100%] bg-gradient-to-t w-full from-[#0B4E9D] to-transparent absolute bottom-0">
-              <div className="limited-lines-2 text-[#fff] text-[16px] leading-[24px] font-[600]">
-                {newsData[1]?.title}
+          {newsData[1]?.id && (
+            <div
+              onClick={onClick?.bind(null, newsData[1]?.id)}
+              className={[
+                "w-[500px] h-[300px] flex flex-col relative cursor-pointer",
+              ].join(" ")}
+            >
+              <div className="rounded-[20px] w-full h-full bg-[#E7F2FF] flex-1">
+                <img
+                  src={newsData[1]?.banner}
+                  className="h-full w-full rounded-[20px] object-cover"
+                  alt="banner"
+                />
+              </div>
+              <div className="p-[10px] flex flex-col justify-end rounded-b-[20px] absolute bottom-0 h-[90px] w-[100%] bg-gradient-to-t w-full from-[#0B4E9D] to-transparent absolute bottom-0">
+                <div className="limited-lines-2 text-[#fff] text-[16px] leading-[24px] font-[600]">
+                  {newsData[1]?.title}
+                </div>
               </div>
             </div>
-          </div>
+          )}
         </div>
         <div className="flex flex-1 items-center max-w-[1200px] w-full justify-between flex-wrap">
           {newsData?.slice(2, newsData?.length)?.map((item) => {
