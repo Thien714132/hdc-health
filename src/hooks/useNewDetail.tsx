@@ -15,6 +15,8 @@ export const useNewDetail = () => {
   const [data, setData] = useState<any>({});
   const [loading, setLoading] = useState<boolean>(false);
 
+  console.log("id", id);
+
   const getNews = async () => {
     setLoading(true);
 
@@ -32,8 +34,10 @@ export const useNewDetail = () => {
   };
 
   useEffect(() => {
-    getNews();
-  }, []);
+    if (id) {
+      getNews();
+    }
+  }, [id]);
 
   return { data, loading };
 };

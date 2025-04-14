@@ -5,4 +5,5 @@ export const API_URL = {
   DOCUMENT: "v1/documents/dropdown",
   MEAL_TICKET: "v1/meal-ticket",
   POST: "v1/posts",
+  REPORT: "absent/export",
 };
