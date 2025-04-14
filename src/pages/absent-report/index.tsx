@@ -1,12 +1,11 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { NetWork } from "@/network";
-import { RESPONSE_CODE } from "@/network/config";
-import { API_URL } from "@/network/url";
-import { getRequestUrl } from "@/network/utils";
-import { LoadingOutlined } from "@ant-design/icons";
-import { Spin } from "antd";
-import { useState } from "react";
-import { toast } from "react-toastify";
+import { NetWork } from '@/network';
+import { RESPONSE_CODE } from '@/network/config';
+import { API_URL } from '@/network/url';
+import { getRequestUrl } from '@/network/utils';
+import { LoadingOutlined } from '@ant-design/icons';
+import { Spin } from 'antd';
+import { useState } from 'react';
+import { toast } from 'react-toastify';
 
 type Props = { isLogin: boolean };
 
@@ -16,12 +15,13 @@ const Report = ({}: Props) => {
   const onPressGet = async () => {
     setLoading(true);
 
-    const res = await NetWork.get(
-      getRequestUrl(API_URL.MEAL_TICKET, { partial: API_URL.REPORT })
+    const res = await NetWork.downloadFile(
+      getRequestUrl(API_URL.MEAL_TICKET, { partial: API_URL.REPORT }),
     );
+    console.log('res', res);
 
     if (res?.status !== RESPONSE_CODE.SUCCESS) {
-      toast.error("Có lỗi xảy ra. Vui lòng thử lại");
+      toast.error('Có lỗi xảy ra. Vui lòng thử lại');
     }
     setLoading(false);
   };
@@ -34,12 +34,9 @@ const Report = ({}: Props) => {
           onClick={onPressGet}
         >
           {loading ? (
-            <Spin
-              indicator={<LoadingOutlined spin style={{ color: "#fff" }} />}
-              size="default"
-            />
+            <Spin indicator={<LoadingOutlined spin style={{ color: '#fff' }} />} size="default" />
           ) : (
-            "Lấy danh sách vắng mặt"
+            'Lấy danh sách vắng mặt'
           )}
         </div>
       </div>
