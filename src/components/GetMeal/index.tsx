@@ -1,9 +1,16 @@
 /* eslint-disable @typescript-eslint/no-empty-object-type */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react/display-name */
+import { APPLICATION_ACTION_TYPE } from "@/context/action";
+import AppContext from "@/context/appContext";
+import { NetWork } from "@/network";
+import { RESPONSE_CODE } from "@/network/config";
+import { API_URL } from "@/network/url";
+import { getRequestUrl } from "@/network/utils";
 import { isNullOrEmpty } from "@/utils/method";
 import { Input, Modal } from "antd";
 import html2canvas from "html2canvas";
+import moment from "moment";
 import {
   forwardRef,
   useContext,
@@ -11,17 +18,10 @@ import {
   useRef,
   useState,
 } from "react";
+import { toast } from "react-toastify";
 import IconCheck from "../../../public/svg/icCheckDOne.svg";
 import { LoadingIndicator } from "../LoadingIndicator";
 import styles from "./index.module.scss";
-import AppContext from "@/context/appContext";
-import { APPLICATION_ACTION_TYPE } from "@/context/action";
-import { NetWork } from "@/network";
-import { getRequestUrl } from "@/network/utils";
-import { API_URL } from "@/network/url";
-import { RESPONSE_CODE } from "@/network/config";
-import { toast } from "react-toastify";
-import moment from "moment";
 
 type GetMealProps = {};
 
@@ -150,12 +150,17 @@ export const GetMeal = forwardRef<GetMealRefProps, GetMealProps>(
             ...state?.meal,
             userName: state?.name,
             community: state?.community,
+            tableName: res?.data?.tableName,
           },
         });
         setState((prev) => ({
           ...prev,
           loading: false,
           isSuccess: true,
+          meal: {
+            ...state?.meal,
+            tableName: res?.data?.tableName,
+          },
         }));
       } else {
         toast.error(res?.data);
@@ -230,19 +235,20 @@ export const GetMeal = forwardRef<GetMealRefProps, GetMealProps>(
                     styles.txtTime,
                   ].join(" ")}
                 >
-                  <strong>Thời gian:</strong> {state?.meal?.time}
+                  <strong className="mr-[5px]">Thời gian: </strong>{" "}
+                  {state?.meal?.time}
                 </div>
                 <div className="w-full text-[16px] text-[#2A2E92] font-[500] leading-[24px] text-center justify-center">
                   <strong>Địa điểm: </strong>
                   {state?.meal?.location}
                 </div>
                 <div className="w-full text-[16px] text-[#2A2E92] font-[500] leading-[24px] text-center justify-center pb-[100px]">
-                  <strong>Bàn: </strong>
+                  <strong>Bàn ăn số: </strong>
                   {state?.meal?.tableName}
                 </div>
               </div>
               <div className="italic text-[14px] leading-[21px] font-[400] text-[#ec0f00]">
-                Vui lòng lưu lại phiếu ăn
+                Đại biểu vui lòng lưu lại phiếu ăn
               </div>
             </div>
 
