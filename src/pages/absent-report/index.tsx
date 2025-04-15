@@ -13,6 +13,7 @@ type Props = { isLogin: boolean };
 
 const Report = ({}: Props) => {
   const [loading, setLoading] = useState<boolean>(false);
+  const [loadingSub, setLoadingSub] = useState<boolean>(false);
   const [data, setData] = useState<any>([]);
   const { setIsLoading } = useLoading();
 
@@ -28,6 +29,20 @@ const Report = ({}: Props) => {
       toast.error("Có lỗi xảy ra. Vui lòng thử lại");
     }
     setLoading(false);
+  };
+
+  const onPressGetGuestsSubscribe = async () => {
+    setLoadingSub(true);
+
+    const res = await NetWork.downloadFile(
+      getRequestUrl(API_URL.MEAL_TICKET, { partial: API_URL.SUBSCRIBE_REPORT })
+    );
+    console.log("res", res);
+
+    if (res?.status !== RESPONSE_CODE.SUCCESS) {
+      toast.error("Có lỗi xảy ra. Vui lòng thử lại");
+    }
+    setLoadingSub(false);
   };
 
   const getNumberGuestSubscribe = async () => {
@@ -76,18 +91,33 @@ const Report = ({}: Props) => {
             </div>
           ))}
         </div>
-        <div
-          className="cursor-pointer h-[50px] pl-[30px] pr-[30px] bg-[#0052d4] items-center justify-center flex rounded-[16px] text-[#fff]"
-          onClick={onPressGet}
-        >
-          {loading ? (
-            <Spin
-              indicator={<LoadingOutlined spin style={{ color: "#fff" }} />}
-              size="default"
-            />
-          ) : (
-            "Export danh sách đại biểu chưa đăng kí"
-          )}
+        <div className="flex items-center gap-[20px]">
+          <div
+            className="w-[360px] cursor-pointer h-[50px] pl-[30px] pr-[30px] bg-[#0052d4] items-center justify-center flex rounded-[16px] text-[#fff]"
+            onClick={onPressGetGuestsSubscribe}
+          >
+            {loadingSub ? (
+              <Spin
+                indicator={<LoadingOutlined spin style={{ color: "#fff" }} />}
+                size="default"
+              />
+            ) : (
+              "Export danh sách đại biểu đã đăng kí"
+            )}
+          </div>
+          <div
+            className="w-[360px] cursor-pointer h-[50px] pl-[30px] pr-[30px] bg-[#0052d4] items-center justify-center flex rounded-[16px] text-[#fff]"
+            onClick={onPressGet}
+          >
+            {loading ? (
+              <Spin
+                indicator={<LoadingOutlined spin style={{ color: "#fff" }} />}
+                size="default"
+              />
+            ) : (
+              "Export danh sách đại biểu chưa đăng kí"
+            )}
+          </div>
         </div>
       </div>
     </div>

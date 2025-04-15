@@ -6,5 +6,6 @@ export const API_URL = {
   MEAL_TICKET: "v1/meal-ticket",
   POST: "v1/posts",
   REPORT: "absent/export",
+  SUBSCRIBE_REPORT: "subscribe/export",
   SUBSCRIBE: "report",
 };

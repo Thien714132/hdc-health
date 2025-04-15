@@ -8,7 +8,7 @@ import { RESPONSE_CODE } from "@/network/config";
 import { API_URL } from "@/network/url";
 import { getRequestUrl } from "@/network/utils";
 import { isNullOrEmpty } from "@/utils/method";
-import { Input, Modal } from "antd";
+import { Input, Modal, Select } from "antd";
 import html2canvas from "html2canvas";
 import moment from "moment";
 import {
@@ -50,7 +50,7 @@ export const GetMeal = forwardRef<GetMealRefProps, GetMealProps>(
       isSuccess: false,
     });
 
-    const { dispatch } = useContext(AppContext);
+    const { dispatch, appState } = useContext(AppContext);
 
     const showModal = (meal: any, isSuccess?: boolean) => {
       setState((prev) => ({
@@ -179,7 +179,7 @@ export const GetMeal = forwardRef<GetMealRefProps, GetMealProps>(
       //   }));
       // }, 1000);
     };
-    console.log("asdasda___", state?.meal);
+    console.log("asdasda___", appState?.general_data?.communities?.length);
     const captureRef = useRef<any>(null);
 
     const handleCapture = async () => {
@@ -288,7 +288,7 @@ export const GetMeal = forwardRef<GetMealRefProps, GetMealProps>(
               <span className="tex-[18px] leading-[23px] font-[500] text-[#2A2E92] mb-[5px] mt-[20px]">
                 Tên đoàn<span className="text-[#FF0000]">*</span>
               </span>
-              <Input
+              {/* <Input
                 placeholder="Nhập tên đoàn..."
                 value={state?.community}
                 onFocus={() => {
@@ -303,12 +303,35 @@ export const GetMeal = forwardRef<GetMealRefProps, GetMealProps>(
                     community: e?.target?.value,
                   }));
                 }}
+              /> */}
+              <Select
+                showSearch
+                placeholder="Chọn đoàn"
+                filterOption={(input, option) =>
+                  (option?.label ?? ("" as any))
+                    ?.toLowerCase()
+                    ?.includes(input.toLowerCase())
+                }
+                options={appState?.general_data?.communities?.map(
+                  (item: string) => {
+                    return {
+                      value: item,
+                      label: item,
+                    };
+                  }
+                )}
+                onChange={(e) => {
+                  setState((prev) => ({
+                    ...prev,
+                    community: e,
+                  }));
+                }}
               />
             </div>
             <div className="italic w-full flex justify-start mt-[10px] text-[#98A2B3]">
               <div className="text-[#FF0000]">Lưu ý:</div> <br />- Đại biểu cần
-              nhập đúng họ tên và tên đoàn đã đăng ký với BTC Mỗi
-              <br />- Đại biểu chỉ nhận 01 phiếu ăn/ 1 bữa ăn
+              nhập đúng họ tên và tên đoàn đã đăng ký với BTC
+              <br />- Mỗi Đại biểu chỉ nhận 01 phiếu ăn/ 1 bữa ăn
               <br />- Chức năng nhận phiếu ăn sẽ bị khóa 2 tiếng trước thời gian
               bữa ăn
             </div>
