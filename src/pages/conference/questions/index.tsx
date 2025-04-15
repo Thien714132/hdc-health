@@ -1,14 +1,16 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { AskingModal, AskingModalRefProps } from "@/components/AskingModal";
 import AppContext from "@/context/appContext";
 import { useQuestions } from "@/hooks/useQuestions";
+import { isNullOrEmpty } from "@/utils/method";
 import { LeftOutlined, PlusOutlined } from "@ant-design/icons";
 import { FloatButton, Pagination } from "antd";
 import moment from "moment";
 import { useRouter } from "next/router";
 import React, { useContext, useRef } from "react";
+import { toast } from "react-toastify";
 import styles from "./index.module.scss";
-import { isNullOrEmpty } from "@/utils/method";
 type Props = { isLogin: boolean };
 
 const Questions: React.FC<Props> = ({}: Props) => {
@@ -18,6 +20,15 @@ const Questions: React.FC<Props> = ({}: Props) => {
   const { id } = router.query;
 
   const ref = useRef<AskingModalRefProps>(null);
+
+  const handleCopy = async (text: string) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      toast.success("Đã sao chép!");
+    } catch (err: any) {
+      toast.error("Lỗi sao chép!");
+    }
+  };
 
   return (
     <div className="flex flex-col w-[100vw] relative">
@@ -88,9 +99,30 @@ const Questions: React.FC<Props> = ({}: Props) => {
                     <div className="text-[14px] leading-[21px] font-[500] mt-[5px] text-[#2A2E92]">
                       {item?.content}
                     </div>
-                    <div className="w-full flex justify-end italic text-[#2A2E92] text-[12px] leading-[23px]">
+                    <div className="w-full flex items-center justify-end italic text-[#2A2E92] text-[12px] leading-[23px]">
                       {item?.name} - {item?.community} -{" "}
                       {moment(item?.createTime).format("DD-MM-YYYY HH:mm:ss")}
+                      <div
+                        className="cursor-pointer h-[20px] w-[50px] bg-[#fff] ml-[20px] text-[#2A2E92] rounded-full flex justify-center items-center"
+                        onClick={() => {
+                          handleCopy(
+                            item?.title +
+                              "\n\n" +
+                              item?.content +
+                              "\n\n[" +
+                              item?.name +
+                              " - " +
+                              item?.community +
+                              " - " +
+                              moment(item?.createTime).format(
+                                "DD-MM-YYYY HH:mm:ss"
+                              ) +
+                              "]"
+                          );
+                        }}
+                      >
+                        Copy
+                      </div>
                     </div>
                   </div>
                 ))}
