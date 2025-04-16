@@ -61,6 +61,7 @@ const NewDetail: React.FC<Props> = ({}: Props) => {
                 dangerouslySetInnerHTML={{ __html: data?.contentBlob }}
                 className={[
                   "w-[90%] pr-[20px] pl-[20px] mt-[30px] pb-[200px]",
+                  styles.contentContainerWeb,
                   styles.contentContainer,
                 ].join(" ")}
               ></div>
