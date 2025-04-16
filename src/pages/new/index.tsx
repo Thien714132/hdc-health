@@ -37,7 +37,7 @@ const NewDetail: React.FC<Props> = ({}: Props) => {
           {data?.banner && (
             <img
               src={data?.banner}
-              className="w-[1000px] object-cover  rounded-[20px] mt-[20px]"
+              className="w-[1000px] h-[400px] object-cover  rounded-[20px] mt-[20px]"
               alt="banner"
             />
           )}
