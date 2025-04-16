@@ -100,7 +100,7 @@ export const NewsList = () => {
             </div>
           )}
         </div>
-        <div className="flex flex-1 items-center max-w-[1200px] w-full justify-between flex-wrap">
+        <div className="flex flex-1 items-center max-w-[1200px] w-full justify-start flex-wrap gap-[20px]">
           {newsData?.slice(2, newsData?.length)?.map((item) => {
             return (
               <div

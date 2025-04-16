@@ -29,7 +29,7 @@ export const useNewDetail = () => {
         )}`;
 
         const iframeHtml = `<iframe src="${proxyUrl}" width="100%" height="700px" style="border:none; backgroundColor:grey"></iframe>`;
-        setData({ ...res?.data, content: iframeHtml });
+        setData({ ...res?.data, contentBlob: iframeHtml });
       } else {
         setData(res?.data);
       }

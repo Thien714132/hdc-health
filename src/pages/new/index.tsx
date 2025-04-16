@@ -3,6 +3,7 @@ import { useNewDetail } from "@/hooks/useNewDetail";
 import { LeftOutlined } from "@ant-design/icons";
 import { useRouter } from "next/router";
 import React from "react";
+import { DocumentViewer } from "react-documents";
 import styles from "./index.module.scss";
 
 type Props = { isLogin: boolean };
@@ -12,8 +13,8 @@ const NewDetail: React.FC<Props> = ({}: Props) => {
   const router = useRouter();
 
   console.log("data", data);
-
-  return (
+  //docs.google.com/viewerng/viewer?url=https://hdc.health.vn/api/v1/attachments/4003671b-6c66-4057-990b-0b26a9539bbe.pdf&hl=Nl
+  https: return (
     <div className="flex flex-col w-[100vw] relative">
       <div
         className={[
@@ -41,13 +42,38 @@ const NewDetail: React.FC<Props> = ({}: Props) => {
               alt="banner"
             />
           )}
-          <div
-            dangerouslySetInnerHTML={{ __html: data?.content }}
-            className={[
-              "w-[90%] pr-[20px] pl-[20px] mt-[30px] pb-[200px]",
-              styles.contentContainer,
-            ].join(" ")}
-          ></div>
+
+          {data?.content?.includes(".pdf") ? (
+            <div className="relative w-full flex flex-col items-center justify-center">
+              <DocumentViewer
+                style={{
+                  width: "100%",
+                  background: "grey",
+                  marginTop: "30px",
+                  borderRadius: "20px",
+                  marginBottom: "20px",
+                }}
+                className={["h-[700px]", styles.pdfContainer].join(" ")}
+                queryParams="hl=Nl"
+                url={data?.content}
+              ></DocumentViewer>
+              <div
+                dangerouslySetInnerHTML={{ __html: data?.contentBlob }}
+                className={[
+                  "w-[90%] pr-[20px] pl-[20px] mt-[30px] pb-[200px]",
+                  styles.contentContainer,
+                ].join(" ")}
+              ></div>
+            </div>
+          ) : (
+            <div
+              dangerouslySetInnerHTML={{ __html: data?.content }}
+              className={[
+                "w-[90%] pr-[20px] pl-[20px] mt-[30px] pb-[200px]",
+                styles.contentContainer,
+              ].join(" ")}
+            ></div>
+          )}
         </div>
       </div>
       {/* <div className="flex flex-col items-center image-background items-center justify-center pt-[120px] fixed" /> */}
