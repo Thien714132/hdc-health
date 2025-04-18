@@ -88,7 +88,7 @@ const Questions: React.FC<Props> = ({}: Props) => {
                   styles.listContainer,
                 ].join(" ")}
               >
-                {state?.data?.map((item: any) => (
+                {state?.data?.map((item: any, index: number) => (
                   <div
                     key={item?.id}
                     className="bg-[#EBF5FD] rounded-[6px] p-[10px]"
@@ -99,7 +99,7 @@ const Questions: React.FC<Props> = ({}: Props) => {
                     <div className="text-[14px] leading-[21px] font-[500] mt-[5px] text-[#2A2E92]">
                       {item?.content}
                     </div>
-                    <div className="w-full flex items-center justify-end italic text-[#2A2E92] text-[12px] leading-[23px]">
+                    <div className="w-full flex items-center justify-end italic text-[#2A2E92] text-[12px] leading-[23px] flex-wrap">
                       {item?.name} - {item?.community} -{" "}
                       {moment(item?.createTime).format("DD-MM-YYYY HH:mm:ss")}
                       <div
