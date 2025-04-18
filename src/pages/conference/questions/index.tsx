@@ -106,7 +106,8 @@ const Questions: React.FC<Props> = ({}: Props) => {
                         className="cursor-pointer h-[20px] w-[50px] bg-[#fff] ml-[20px] text-[#2A2E92] rounded-full flex justify-center items-center"
                         onClick={() => {
                           handleCopy(
-                            item?.title +
+                            "- " +
+                              item?.title +
                               "\n\n" +
                               item?.content +
                               "\n\n[" +
