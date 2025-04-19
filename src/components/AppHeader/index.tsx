@@ -26,7 +26,7 @@ export const AppHeader = () => {
     <div className="flex flex-col w-full fixed top-0 left-0 z-50">
       {/* Header Section */}
       <div className="w-[100vw] flex items-center bg-[rgba(255,255,255,1)]  p-[10px] border-b-[#0052d4] border-b-[1px] border-b-solid header">
-        <div className="flex items-center gap-[5px]">
+        <div className="flex items-center">
           <img
             rel="icon"
             src="https://hdc.health.vn/logo"
@@ -35,12 +35,12 @@ export const AppHeader = () => {
             className={styles.logoApp}
             alt="logo app"
           />
-          <Image
+          <img
             rel="icon"
-            src={ClbLogo}
-            height={50}
-            width={70}
-            // width={50}
+            src={
+              "https://hdc.health.vn/api/v1/attachments/b1f48355-369f-4cf8-8f5b-b20056798fca.png"
+            }
+            width={80}
             // className={styles.logoApp}
             alt="logo app"
           />
