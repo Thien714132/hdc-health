@@ -20,34 +20,36 @@ const Documents = ({}: Props) => {
   const renderDocument = (documents: any[]) => {
     return (
       <div className="flex flex-col justify-center gap-[10px] cursor-pointer  ">
-        {documents?.map((item, index) => (
-          <div
-            onClick={() => {
-              console.log(item?.url);
-              if (item?.url?.includes(".pdf")) {
-                window.open(item?.url);
-              } else {
-                ref?.current?.showModal(item?.url);
-              }
-              // window.open(item?.url);
-            }}
-            key={index}
-            className="flex items-center gap-[10px] bg-[#ebf5fd] p-[10px] rounded-[6px]"
-          >
-            <IconFile width={24} height={24} />
-            <div className="flex-1">{item?.title}</div>
-            <Image
-              alt={"download_icon"}
-              src={IconDownload}
-              width={24}
-              height={24}
-              onClick={(e: any) => {
-                e.stopPropagation();
-                window.open(item?.url);
+        {documents
+          ?.sort((a, b) => a?.title.localeCompare(b?.title))
+          ?.map((item, index) => (
+            <div
+              onClick={() => {
+                console.log(item?.url);
+                if (item?.url?.includes(".pdf")) {
+                  window.open(item?.url);
+                } else {
+                  ref?.current?.showModal(item?.url);
+                }
+                // window.open(item?.url);
               }}
-            />
-          </div>
-        ))}
+              key={index}
+              className="flex items-center gap-[10px] bg-[#ebf5fd] p-[10px] rounded-[6px]"
+            >
+              <IconFile width={24} height={24} />
+              <div className="flex-1">{item?.title}</div>
+              <Image
+                alt={"download_icon"}
+                src={IconDownload}
+                width={24}
+                height={24}
+                onClick={(e: any) => {
+                  e.stopPropagation();
+                  window.open(item?.url);
+                }}
+              />
+            </div>
+          ))}
       </div>
     );
   };
