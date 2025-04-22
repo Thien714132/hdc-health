@@ -18,7 +18,9 @@ const Home: React.FC<Props> = ({}: Props) => {
       <div className="bannerContainer z-1 flex flex-col items-center">
         <Image src={Banner} alt="Banner" style={{ width: "100%" }} />
         <video
-          src={"/video/video_background.mp4"} // replace with your actual video path
+          src={
+            "https://hdc.health.vn/api/v1/attachments/991466d0-9109-42a3-9308-e312d73c0fac.mp4"
+          } // replace with your actual video path
           controls // shows default play/pause controls
           autoPlay // optional: autoplay when component mounts
           loop // loop the video continuously
